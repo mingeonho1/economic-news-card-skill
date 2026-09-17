@@ -1,13 +1,14 @@
 # Design system
 
-The sequence must read from headline to number to practical impact without requiring body text.
+The canonical v3 card is the bundled life-impact renderer in `../assets/renderer/`. It must read from headline to verified change to `그래서 우리한텐?` without requiring a caption.
 
-- Canvas: 1080×1920 portrait.
+- Canvas: 1080×1920 portrait with all essential content inside the renderer's safe area.
 - Frame: warm cream field, white paper panel, near-black border and text.
-- Header: series name and weekly label.
-- Main: two-line headline; use marker accent only around the decisive phrase.
-- Visual: one large change value and one comparison. Use bars for pace changes; comparison blocks for before/after rates.
-- Footer: period and abbreviated primary source with publication date.
+- Header: series name, card position, and weekly label.
+- Main: headline within two lines; use marker accent only around the decisive phrase.
+- Evidence: show the minimum number, comparison, or explanation needed to understand the verified change. Do not force every story into a large-number chart.
+- Impact: connect the event to a concrete group and pathway. One direct effect can use one or two lines; multiple short rows are allowed only when distinct pathways are essential.
+- Footer: period plus abbreviated original source and release date.
 
 Accent cycle:
 
@@ -17,5 +18,4 @@ Accent cycle:
 | teal-orange | teal | orange |
 | olive-terracotta | olive | terracotta |
 
-Do not add decorative stock photos, multiple chart types, or more than one major numeric message to solve an empty space. Simplify copy instead.
-
+Use one palette for all cards in a weekly edition, then advance the cycle. Keep the paper system and information order stable. Do not add decorative stock photos, extra chart types, or numeric ornaments to fill space. A new illustration may be generated only when it explains the story better than the existing code shapes; exact text and data remain in the code-rendered layer.

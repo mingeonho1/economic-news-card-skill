@@ -1,0 +1,13 @@
+{
+  "issue_id": "sample-2026-09-17-fed-impact",
+  "cards": [
+    {
+      "title": "미국 금리 인상, 내 돈에는?",
+      "description": "연준이 0.25%p 올렸어요. 여행·미국 주식·내 대출에 미칠 영향을 확인해 보세요.",
+      "image_url": "https://raw.githubusercontent.com/mingeonho1/economic-news-card-skill/main/workflows/economy-news-cards/examples/2026-09-17-fed-impact/market-impact.png",
+      "source_url": "https://github.com/mingeonho1/economic-news-card-skill/blob/main/workflows/economy-news-cards/examples/2026-09-17-fed-impact/sources.md",
+      "download_url": "https://github.com/mingeonho1/economic-news-card-skill/blob/main/workflows/economy-news-cards/examples/2026-09-17-fed-impact/market-impact.png?raw=true",
+      "png_sha256": "f281861b6875bac5b8d6fcbb9b72fe76ee85514da1505d39cb442c5c2d196104"
+    }
+  ]
+}

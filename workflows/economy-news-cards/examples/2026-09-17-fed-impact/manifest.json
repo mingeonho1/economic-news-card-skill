@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "edition_type": "sample",
+  "status": "sample_complete",
+  "created_date": "2026-09-17",
+  "timezone": "Asia/Seoul",
+  "news_date": "2026-09-17",
+  "belongs_to_coverage_start": "2026-09-16",
+  "belongs_to_coverage_end": "2026-09-22",
+  "counts_toward_weekly_coverage": false,
+  "include_in_delivered_topic_deduplication": true,
+  "palette": "green-coral",
+  "card_count": 1,
+  "verification": {
+    "official_source": "pass",
+    "date_and_timezone": "pass",
+    "independent_factual_review": "pass",
+    "conditional_impact_review": "pass",
+    "visual_review": "pass",
+    "overflow_check": "pass",
+    "safe_area_check": "pass",
+    "canvas_size": "1080x1920",
+    "png_sha256": "f281861b6875bac5b8d6fcbb9b72fe76ee85514da1505d39cb442c5c2d196104"
+  },
+  "items": [
+    {
+      "id": "fed-fomc-rate-decision-2026-09-16",
+      "title": "미국이 금리 올리면, 내 돈은 어떻게 돼?",
+      "source_url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260916a.htm",
+      "release_date": "2026-09-16",
+      "release_time_local": "2026-09-16T14:00:00-04:00",
+      "release_time_kst": "2026-09-17T03:00:00+09:00",
+      "old_target_range_percent": [3.5, 3.75],
+      "new_target_range_percent": [3.75, 4.0],
+      "change_percentage_points": 0.25,
+      "illustrative_cost_usd": 1000,
+      "illustrative_fx_increase_krw_per_usd": 10,
+      "illustrative_extra_cost_krw": 10000,
+      "output": "market-impact.png"
+    }
+  ]
+}

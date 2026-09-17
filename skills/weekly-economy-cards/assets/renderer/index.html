@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, initial-scale=1" />
+    <title>내 돈에 닿는 뉴스</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-theme="green-coral">
+    <main class="story">
+      <article class="paper" aria-labelledby="headline">
+        <header class="header safe-check">
+          <p class="series" id="series"></p>
+          <p class="date" id="date"></p>
+        </header>
+
+        <section class="title-block safe-check">
+          <h1 id="headline" class="guard"></h1>
+        </section>
+
+        <section class="fact-card safe-check" aria-label="연준 정책금리 결정">
+          <p class="fact-label" id="fact-label"></p>
+          <strong class="fact-big guard" id="fact-big"></strong>
+          <p class="fact-supporting guard" id="fact-supporting"></p>
+        </section>
+
+        <section class="impacts safe-check" aria-labelledby="impact-title">
+          <h2 id="impact-title"></h2>
+          <div class="impact-list" id="impact-list"></div>
+        </section>
+
+        <footer class="footer safe-check">
+          <span id="footer-left"></span>
+          <span id="footer-right"></span>
+        </footer>
+      </article>
+    </main>
+
+    <script src="data.js"></script>
+    <script>
+      const edition = window.WEEKLY_ECONOMY;
+      const query = new URLSearchParams(location.search);
+      const requested = Number(query.get("card") || 1);
+      const cards = Array.isArray(edition.cards) ? edition.cards : [];
+      const cardAvailable =
+        cards.length >= 1 &&
+        cards.length <= 5 &&
+        Number.isInteger(requested) &&
+        requested >= 1 &&
+        requested <= cards.length;
+
+      document.documentElement.dataset.cardAvailable = String(cardAvailable);
+      if (!cardAvailable) {
+        document.documentElement.dataset.renderReady = "true";
+        throw new Error("Requested card is unavailable or card count is outside 1..5");
+      }
+
+      const data = cards[requested - 1];
+      document.body.dataset.theme = edition.theme;
+      document.getElementById("series").textContent = edition.series;
+      document.getElementById("date").textContent = data.date;
+      document.getElementById("headline").innerHTML = data.hook;
+      document.getElementById("fact-label").textContent = data.fact.label;
+      document.getElementById("fact-big").textContent = data.fact.big;
+      document.getElementById("fact-supporting").textContent = data.fact.supporting;
+      document.getElementById("impact-title").textContent = data.sectionTitle;
+      document.getElementById("footer-left").textContent = data.footerLeft;
+      document.getElementById("footer-right").textContent = data.footerRight;
+
+      document.getElementById("impact-list").innerHTML = data.impacts
+        .map(
+          (impact) => `
+            <section class="impact-card ${impact.className}">
+              <h3>${impact.label}</h3>
+              <div class="impact-copy">
+                <p class="guard">${impact.body}</p>
+                ${
+                  impact.example
+                    ? `<div class="calculation"><span>${impact.exampleLabel}</span><strong>${impact.example}</strong></div>`
+                    : ""
+                }
+                ${impact.action ? `<div class="action">확인할 것 · ${impact.action}</div>` : ""}
+              </div>
+            </section>`,
+        )
+        .join("");
+
+      const markRenderState = () => {
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+        window.scrollTo(0, 0);
+        const overflowTargets = [...document.querySelectorAll(".guard")].filter(
+          (element) =>
+            element.scrollHeight > element.clientHeight + 1 ||
+            element.scrollWidth > element.clientWidth + 1,
+        );
+        const unsafeTargets = [...document.querySelectorAll(".safe-check")].filter((element) => {
+          const rect = element.getBoundingClientRect();
+          return rect.top < 199 || rect.bottom > 1721;
+        });
+        document.documentElement.dataset.overflow = String(overflowTargets.length > 0);
+        document.documentElement.dataset.overflowTargets = overflowTargets
+          .map(
+            (element) =>
+              `${element.id || element.className}:${element.scrollWidth}x${element.scrollHeight}/${element.clientWidth}x${element.clientHeight}`,
+          )
+          .join(",");
+        document.documentElement.dataset.safe = String(unsafeTargets.length === 0);
+        document.documentElement.dataset.safeTargets = unsafeTargets
+          .map((element) => {
+            const rect = element.getBoundingClientRect();
+            return `${element.id || element.className}:${Math.round(rect.top)}-${Math.round(rect.bottom)}`;
+          })
+          .join(",");
+        document.documentElement.dataset.renderReady = "true";
+      };
+
+      markRenderState();
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(markRenderState);
+      window.addEventListener("load", markRenderState);
+    </script>
+  </body>
+</html>

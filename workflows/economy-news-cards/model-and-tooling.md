@@ -1,29 +1,25 @@
 # 모델·도구 선택
 
-## 실제 제작 경로
+## 현재 제작 경로
 
-| 구간 | 도구 | 이유 |
+| 구간 | 도구 | 역할 |
 | --- | --- | --- |
-| 원문 탐색 | 웹 검색 + 발표기관 원문 | 최신 수치와 발표일을 직접 확인 |
-| 초안·데이터 구조화 | 실행 환경의 Codex 모델 | 기사 문장을 카드 구조로 압축하고 검증 항목을 누락하지 않기 위해 사용 |
-| 카드 비주얼 생성 | 기본 내장 GPT Image | 레퍼런스의 정보 위계와 시각적 완성도를 카드 이미지에 반영 |
-| 정확 수치 보조 | HTML/CSS/JavaScript + Chrome Headless | 숫자·날짜·차트를 고정된 위치와 크기로 덧씌워야 할 때 사용 |
-| 시각 검수 | 생성 PNG 직접 확인 | 코드 검사가 잡지 못하는 읽기 흐름과 여백을 확인 |
+| 원문 탐색 | 웹 검색 + 발표기관 원문 | 새 사건을 찾고 발표일·숫자·시간대를 원문에서 확인 |
+| 편집·구조화 | 실행 환경의 언어 모델 | 생활 영향이 분명한 후보 선택과 카드 데이터 작성 |
+| 카드 렌더링 | HTML/CSS/JavaScript + Chrome Headless | 정확한 한글, 수치, 날짜와 1080×1920 레이아웃 생성 |
+| 시각 검수 | 생성 PNG 직접 확인 | 읽기 흐름, 줄바꿈, 여백과 안전영역 확인 |
+| 선택적 삽화 | 실행 환경의 이미지 생성 도구 | 기존 코드 도형으로 설명하기 어려운 새 삽화가 필요할 때만 사용 |
 
-정확한 언어 모델 ID는 실행 환경이 노출할 때만 남긴다. 이 저장소는 특정 모델명을 부풀려 적지 않는다. 모델보다 중요한 것은 카드가 통과해야 할 데이터·검증·렌더링 계약이다.
+2026-09-17 Fed 샘플의 실제 제작은 HTML/CSS/JavaScript와 Chrome Headless로 수행했다. GPT Image를 사용하지 않았다. 카드 비주얼의 현재 기본 경로도 Skill에 포함된 코드 렌더러다.
 
-## 이미지 모델은 언제 쓰는가
+## 설정 별칭과 실제 실행 기록
 
-카드 비주얼의 기본 제작 경로는 기본 내장 GPT Image다. 두 개의 인포그래픽 레퍼런스에서 정보 위계와 색의 역할을 추출해 프롬프트에 반영했다. 한 글자도 틀리면 안 되는 숫자·날짜·축은 검증된 문구로 재생성하거나 HTML/CSS 렌더러를 보조로 쓴다. OpenAI 공식 모델 문서는 GPT Image 2.5 Sunburst를 이미지 생성·편집에 가장 높은 성능이 필요한 작업용으로, GPT Image 2.5 Flare를 빠른 고품질 생성용으로 소개한다. API의 이미지 생성 레퍼런스는 모델·크기·품질 값을 명시해 요청하도록 설명한다.
+작업 환경의 설정 별칭은 Claude Fable5.1 high, Opus5.0 medium, Sonnet5 medium과 Codex Astra high, Sol medium, Terra medium이다. 독립 리뷰 설정은 Astra xhigh다. 이 이름은 작업을 어느 프로필로 라우팅할지 나타내는 설정이며, 실제 실행 모델의 증거가 아니다.
 
-- [GPT Image 2.5 Sunburst 공식 문서](https://developers.openai.com/api/docs/models/gpt-image-2.5-sunburst)
-- [GPT Image 2.5 Flare 공식 문서](https://developers.openai.com/api/docs/models/gpt-image-2.5-flare)
-- [Images API: Create image](https://developers.openai.com/api/reference/cli/resources/images/methods/generate)
+`provenance.md`에는 실행 환경이 노출한 실제 모델·도구 식별자만 기록한다. 식별자가 보이지 않으면 역할과 도구만 적고 모델 이름을 추정하지 않는다. 설정 별칭을 실제 모델 ID로 바꾸어 쓰거나 사용하지 않은 GPT Image 모델을 제작 모델로 기재하지 않는다.
 
-기본 내장 GPT Image 경로는 실행 로그에 모델 ID를 노출하지 않을 수 있다. 그래서 이 저장소는 확인되지 않은 특정 GPT Image 모델명을 결과물의 사용 모델이라고 주장하지 않는다.
+## 이미지 생성 경계
 
-## 공식 문서를 어떻게 적용했는가
+이미지 생성은 새 삽화가 카드 이해에 실질적으로 도움이 될 때만 선택한다. 생성한 삽화에도 정확한 수치·날짜·축·출처 텍스트를 맡기지 않는다. 이 정보는 검증된 데이터에서 코드로 렌더링한다.
 
-- 이미지 문서의 모델 선택과 생성 파라미터 개념은 GPT Image 카드 비주얼 생성의 선택 기준으로 반영했다.
-- [Codex Scheduled tasks 문서](https://learn.chatgpt.com/docs/automations?surface=app)의 반복 실행·알림 개념은 주간 훅의 실행 계약으로 반영했다.
-- 최종 카드 비주얼은 GPT Image로 만들고, 정확도가 필요한 텍스트와 차트는 검증과 템플릿 렌더링으로 보조한다.
+현재 샘플의 사실, 숫자, 출처, 실제 도구 기록은 [샘플 제작 기록](examples/2026-09-17-fed-impact/provenance.md)에 남아 있다.

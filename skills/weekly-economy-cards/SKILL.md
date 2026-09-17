@@ -1,41 +1,55 @@
 ---
 name: weekly-economy-cards
-description: Create verified weekly Korean economy, stock, and finance news cards for Instagram Stories. Use when producing three concise, source-backed 1080×1920 cards with a reproducible data-to-PNG workflow.
+description: Create one to five verified Korean economy and market news cards for Instagram Stories, selecting only official-source stories with clear practical impact and rendering reproducible 1080×1920 PNGs.
 metadata:
-  short-description: Verified weekly economy story cards
+  short-description: Verified life-impact economy story cards
 ---
 
 # Weekly Economy Cards
 
-Create three Korean Instagram Story cards for a weekly period. Each card contains one news item, one primary number or comparison, and a short `그래서 우리한텐?` interpretation. The outcome is a downloadable package, not just a draft caption.
+Create **one to five** Korean Instagram Story cards for the weekly period. Select only new, source-verifiable economy or market stories with a clear path to household spending, loans, savings, investments, or jobs. Do not fill a fixed card count.
 
 ## Working method
 
-1. Determine the coverage period. Start on the day after the previous card’s final date; do not overlap weeks.
-2. Collect five to eight candidates from primary institutions. Keep three that have a clear number and distinct practical relevance.
-3. Check every number against its primary URL before writing. Read [source-verification.md](references/source-verification.md) before creating `data.js`.
-4. Keep facts in the headline and conditional interpretation in `그래서 우리한텐?`. Avoid investment advice and causal claims the source does not establish.
-5. Use the built-in GPT Image workflow for the card visual, with the approved reference-derived hierarchy and next palette in the required cycle. For a number or date that must remain exact, use the supplied HTML/CSS template as a supporting layer rather than asking the image model to improvise it.
-6. Inspect PNGs. Fix wording or regenerate if the reading order, data legibility, or balance fails. Archive PNGs, source notes, input data, provenance, and ZIP under the weekly run folder.
+1. At Wednesday 20:00 KST, read the completed-week ledger. When it exists, select the earliest unfinished Wednesday-through-Tuesday period: the previous completed weekly end date plus one day through plus seven days. Process missed weeks one at a time; never merge or skip them, and never build a future or incomplete week. Only when no completed-week ledger exists, select and record the most recently finished Wednesday-through-Tuesday period before run time. A normal 2026-09-23 run covers 2026-09-16 through 22.
+2. Check prior `manifest.json`, `sources.md`, weekly runs, and samples before research. `sample_complete` and partial items remain in duplicate checks but do not advance the weekly continuity boundary.
+3. Collect candidates from official institutions, exchanges, filings, and company releases. Apply [market-selection.md](references/market-selection.md), then keep one to five distinct stories whose life-impact score is at least 1 and total score is at least 5.
+4. Verify each selected story against its original source. Read [source-verification.md](references/source-verification.md) before writing card data. Check publication and event dates, source timezone and KST date, numbers, units, comparisons, status, and duplicate identity.
+5. Put confirmed facts in the headline and explanation. Use conditional language in `그래서 우리한텐?`; do not turn sequence into causation or give investment advice.
+6. Copy `assets/renderer/` into the run workspace, edit its `data.js`, and render one card per `cards` entry. The Skill is self-contained and must not depend on `workflows/` files.
+7. Open every PNG. Check reading order, Korean line breaks, exact facts, safe areas, source date, and 1080×1920 dimensions. Shorten the copy or simplify the visual when it fails.
+8. Package the PNGs, source notes, input data, provenance, manifest, and optional ZIP according to [run-package.md](references/run-package.md).
 
-## Orchestration and token budget
+## Configured profiles and actual execution
 
-When the Claude Code Fable profile is available, use its `deep-reasoner` role for editorial planning, source-conflict resolution, and visual tradeoffs. Use Claude Opus 5.1 with maximum effort for this role. Route implementation, rendering, and verification changes to the `executor` role using Claude Opus 5.0 at extra-high effort. Route mechanical file reads, commands, and size checks to Claude Sonnet 5 at medium effort.
+When these profiles are available, Claude uses `Fable5.1 high`, `Opus5.0 medium`, and `Sonnet5 medium`; Codex uses `Astra high`, `Sol medium`, and `Terra medium`; independent review uses `Astra xhigh`.
 
-Parallelize only independent work: for example, one agent can verify domestic statistics while another checks overseas releases and a third reviews the rendered PNGs. Give each agent a bounded deliverable and source list. Do not ask multiple agents to edit the same `data.js` or design file.
+| Responsibility | Runtime | Configured alias |
+| --- | --- | --- |
+| Editorial planning and source conflicts | Claude | Fable5.1 high |
+| General implementation | Claude | Opus5.0 medium |
+| Mechanical reads and commands | Claude | Sonnet5 medium |
+| Planning and decisions | Codex | Astra high |
+| Implementation | Codex | Sol medium |
+| Commands and tests | Codex | Terra medium |
+| Independent review | Codex | Astra xhigh |
 
-Use expensive reasoning once to choose the three-story angle and resolve evidence conflicts. Keep raw URLs and structured facts in files so builders receive only the selected facts, not repeated article dumps. Stop research when three verified, distinct items are ready; extra candidates do not improve the card.
+These aliases describe routing configuration, not proof of a particular run. Record actual execution only from model or tool identifiers exposed by the runtime. Never infer an actual model from an alias.
 
-## Non-negotiable card constraints
+Parallel work is safe for independent source checks and visual review. Give each worker a bounded output and source list; do not let multiple workers edit the same data or design file.
 
-- Three cards per weekly edition; one news item per card.
-- 1080×1920 PNG; title at most two lines; practical impact one or two short lines.
-- Keep the base paper system fixed. Cycle the single accent palette: `green-coral → teal-orange → olive-terracotta`.
-- Place the release source and date in the footer; put full URLs and verification notes in `sources.md`.
-- Use the built-in GPT Image workflow for final card visuals. Keep the HTML/CSS renderer available as a supporting path for exact text or chart layers.
+## Non-negotiable constraints
+
+- One to five cards per weekly edition; one news item per card; no filler story.
+- 1080×1920 PNG; title at most two lines; practical impact in short, readable blocks.
+- Keep the v3 paper system and cycle one weekly palette: `green-coral → teal-orange → olive-terracotta`.
+- Show an abbreviated original source and release date on the card. Keep full URLs, timezone decisions, and verification notes in `sources.md`.
+- Use the bundled HTML/CSS/JavaScript renderer for exact copy and layout. GPT Image is optional only when a genuinely new illustration is needed.
+- Preserve the 2026-09-17 Fed card as `sample_complete`, not a completed weekly run. Preserve the older three-card example as history.
 
 ## Read when needed
 
-- For primary-source facts and wording checks: [source-verification.md](references/source-verification.md)
-- For visual hierarchy, typography, and palette choices: [design-system.md](references/design-system.md)
-- For folder names, output artifacts, and notification content: [run-package.md](references/run-package.md)
+- Candidate selection and duplicate handling: [market-selection.md](references/market-selection.md)
+- Primary-source and wording checks: [source-verification.md](references/source-verification.md)
+- Visual hierarchy and palette: [design-system.md](references/design-system.md)
+- Output status and artifacts: [run-package.md](references/run-package.md)

@@ -3,7 +3,15 @@
 # Local rendering output. Keep curated example assets already tracked.
 workflows/economy-news-cards/template/output/
 workflows/economy-news-cards/runs/
+skills/weekly-economy-cards/assets/renderer/output/
+/runs/
 
 # Local browser and editor files
 .chrome-profile/
 .vscode/
+
+# Local secrets. Keep shareable templates public.
+.env
+.env.*
+!.env.example
+!.env.sample

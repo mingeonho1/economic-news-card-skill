@@ -1,13 +1,14 @@
-# 카드 템플릿
+# 카드 렌더러 안내
 
-`data.js`의 `theme`, `weekLabel`, `period`, `slides`만 이번 주 사실로 바꾼다. `slides`는 정확히 3개이며, 각 항목은 `headline`, `source`, `visual`, `note`를 가진다.
+현재 기준 렌더러는 Skill이 자체 포함한 [`skills/weekly-economy-cards/assets/renderer/`](../../../skills/weekly-economy-cards/assets/renderer/) 한 곳에서 관리한다. 이 `template/` 폴더는 중복 코드를 두지 않고 기준 위치만 안내한다.
+
+새 실행 폴더에 렌더러를 복사하고 `data.js`의 `cards`를 1~5개 작성한다.
 
 ```bash
+cp -R ../../../skills/weekly-economy-cards/assets/renderer ./economy-card-render
+cd economy-card-render
 chmod +x render.sh
 ./render.sh
 ```
 
-결과는 `output/weekly-economy-01.png`부터 `03.png`까지다. 렌더러는 Chrome Headless를 사용하며 텍스트 넘침과 1080×1920 크기를 실패 조건으로 처리한다.
-
-완료한 파일은 `runs/YYYY-MM-DD/`로 복사하고 `sources.md`, `provenance.md`와 함께 ZIP으로 묶는다.
-
+결과는 `output/weekly-economy-01.png`부터 실제 `cards` 수만큼 생성된다. 모든 PNG의 문장, 수치, 출처, 안전영역과 1080×1920 크기를 확인한 뒤 실행 패키지로 옮긴다.
