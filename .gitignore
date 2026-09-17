@@ -1,0 +1,9 @@
+.DS_Store
+
+# Local rendering output. Keep curated example assets already tracked.
+workflows/economy-news-cards/template/output/
+workflows/economy-news-cards/runs/
+
+# Local browser and editor files
+.chrome-profile/
+.vscode/
